@@ -1,20 +1,20 @@
-const Itinerary = require('../src/Itinerary.js');
-const Port = require('../src/Port.js');
 const Ship = require('../src/Ship.js')
 
-let glasgow;
 let manchester;
-let ship;
+let glasgow;
 let itinerary;
-
-beforeEach( ()=> {
-  glasgow = new Port('Glasgow');
-  manchester = new Port('Manchester');
-  itinerary = new Itinerary([manchester,glasgow]);
-  ship = new Ship(itinerary);
-});
-
+let ship;
 describe('constructor', () => {
+  beforeEach( ()=> {
+    manchester = { 
+      addShip: jest.fn()
+    }
+    glasgow = { 
+      addShip: jest.fn()
+    }
+    itinerary = { ports: [manchester,glasgow] }
+    ship = new Ship(itinerary);
+  });
   it('creates new constructor', () => {
     expect(ship).toBeInstanceOf(Ship);
   });
@@ -28,29 +28,45 @@ describe('constructor', () => {
   });
 
   it('gets added to port on instantiation', () => {
-    expect(ship.currentPort.ships).toContain(ship);
+    expect(ship.currentPort.addShip).toHaveBeenCalled();
   });
 })
+beforeEach( ()=> {
+  manchester = { 
+    ships: [],
+    addShip: jest.fn(),
+    removeShip: jest.fn()
+  }
+  glasgow = { 
+    ships: [],
+    addShip: jest.fn(),
+    removeShip: jest.fn()
+  }
+  itinerary = { ports: [manchester,glasgow] }
+  ship = new Ship(itinerary);
+  ship.setSail();
+});
+describe('setSail', () => {  
+  it('removes the ship from the ports ships', () => {  
+    expect(manchester.removeShip).toHaveBeenCalled()
+  });
 
-describe('setSail', () => {
-  it('can set Sail', () => {
-    ship.setSail();
+  it('removes the ship from the previous port property property of the ship object', () => {
+    expect(ship.previousPort.removeShip).toHaveBeenCalled()
+  });
+  it('sets previousPort to the currentPort', () => {
     expect(ship.previousPort).toEqual(manchester)
-    expect(ship.previousPort.ships).not.toContain(ship)
-    expect(manchester.ships).not.toContain(ship)
   });
   it('sets currentPort to null', () => {
-    ship.setSail();
     expect(ship.currentPort).toEqual(null)
   });
 })
 
 describe('dock', () => {  
   it('can dock at a different port', () => {
-    ship.setSail();
     ship.dock();
     expect(ship.currentPort).toEqual(glasgow)
-    expect(ship.currentPort.ships).toContain(ship)
-    expect(glasgow.ships).toContain(ship)
+    expect(ship.currentPort.addShip).toHaveBeenCalled()
+    expect(glasgow.addShip).toHaveBeenCalled()
   })
 })

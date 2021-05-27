@@ -1,17 +1,12 @@
-const Itinerary = require('../src/Itinerary.js');
 const Port = require('../src/Port.js');
-const Ship = require('../src/Ship.js');
 
 let glasgow;
 let manchester;
 let ship;
-let itinerary;
-
 beforeEach( ()=> {
   glasgow = new Port('Glasgow');
   manchester = new Port('Manchester');
-  itinerary = new Itinerary([manchester,glasgow]);
-  ship = new Ship(itinerary);
+  ship = jest.fn();
 });
 describe('Port', () => {
   it('creates a port object', () => {
