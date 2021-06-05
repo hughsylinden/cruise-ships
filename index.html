@@ -9,7 +9,9 @@
     <link rel="stylesheet" href="css/style.css">
   </head>
   <body>
-    <div id="viewport"></div>
+    <div id="viewport">
+      <div id="ports"></div>
+    </div>
   
     <script src="src/Controller.js"></script>  
     <script src="src/Port.js"></script>
@@ -17,7 +19,10 @@
     <script src="src/Itinerary.js"></script>
   <script type="text/javascript">
     const controller = new Controller();
-    const port = new Port('Glasgow');
+    const glasgow = new Port('Glasgow');
+    const manchester = new Port('Manchester');
+    const itinerary = new Itinerary([glasgow,manchester]);
+    controller.renderPorts(itinerary.ports);
   </script>
   </body>
 </html>
