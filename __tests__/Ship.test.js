@@ -28,7 +28,7 @@ describe('constructor', () => {
   });
 
   it('gets added to port on instantiation', () => {
-    expect(ship.currentPort.addShip).toHaveBeenCalled();
+    expect(ship.currentPort.addShip).toHaveBeenCalledWith(ship);
   });
 })
 beforeEach( ()=> {
@@ -48,25 +48,28 @@ beforeEach( ()=> {
 });
 describe('setSail', () => {  
   it('removes the ship from the ports ships', () => {  
-    expect(manchester.removeShip).toHaveBeenCalled()
+    expect(manchester.removeShip).toHaveBeenCalled();
   });
 
   it('removes the ship from the previous port property property of the ship object', () => {
-    expect(ship.previousPort.removeShip).toHaveBeenCalled()
+    expect(ship.previousPort.removeShip).toHaveBeenCalled();
   });
   it('sets previousPort to the currentPort', () => {
-    expect(ship.previousPort).toEqual(manchester)
+    expect(ship.previousPort).toEqual(manchester);
   });
   it('sets currentPort to null', () => {
-    expect(ship.currentPort).toEqual(null)
+    expect(ship.currentPort).toEqual(null);
   });
 })
 
 describe('dock', () => {  
   it('can dock at a different port', () => {
     ship.dock();
-    expect(ship.currentPort).toEqual(glasgow)
-    expect(ship.currentPort.addShip).toHaveBeenCalled()
-    expect(glasgow.addShip).toHaveBeenCalled()
+    expect(ship.currentPort).toEqual(glasgow);
+  });
+  it('called the addShip method of the ships currentPort & the Port object', () => {
+    ship.dock();
+    expect(ship.currentPort.addShip).toHaveBeenCalledWith(ship);
+    expect(glasgow.addShip).toHaveBeenCalledWith(ship);
   })
-})
+});
