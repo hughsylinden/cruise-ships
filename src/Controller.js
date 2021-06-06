@@ -26,5 +26,12 @@ Controller.prototype = {
       const width = parseInt(portsElement.style.width.slice(0,-2))+256;
       portsElement.style.width = width+'px';
     })
+  },
+  renderShip: function(ship){ 
+    const index = ship.currentPort.ships.indexOf(ship);
+    const port = document.querySelector(`.port[data-port-index='${index}']`);  
+    const shipToRender = document.getElementById('ship');    
+    shipToRender.style.top = port.offsetTop+32+"px"; 
+    shipToRender.style.left = port.offsetLeft-32+"px";
   }
 }

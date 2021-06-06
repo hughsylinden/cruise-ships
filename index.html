@@ -11,6 +11,7 @@
   <body>
     <div id="viewport">
       <div id="ports"></div>
+      <div id="ship"></div>
     </div>
   
     <script src="src/Controller.js"></script>  
@@ -23,6 +24,8 @@
     const manchester = new Port('Manchester');
     const itinerary = new Itinerary([glasgow,manchester]);
     controller.renderPorts(itinerary.ports);
+    const ship = new Ship(itinerary);
+    controller.renderShip(ship);
   </script>
   </body>
 </html>
