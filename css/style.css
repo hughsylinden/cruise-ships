@@ -43,3 +43,11 @@ body {
   height: 64px;
 }
 
+#sailButton {
+  width: 100%;
+  bottom: 0%;
+  position: absolute;
+  background-color: red;
+  color: white;
+}
+
